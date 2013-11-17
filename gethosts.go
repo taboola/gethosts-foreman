@@ -19,8 +19,8 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
- 
+*/
+
 package main
 
 import (
@@ -114,6 +114,8 @@ func (self *HostGetter) getHosts() (rt string, err error) {
 		errf := ioutil.WriteFile(cacheLoc, []byte(rt), os.ModePerm)
 		if errf != nil {
 			log.Printf("downloaded and parsed ok, could not save to cache %v", errf)
+		} else {
+			log.Printf("saved hosts in cache")
 		}
 	} else {
 		log.Printf("could not get hosts", err)
