@@ -2,7 +2,7 @@
 function _foreman_completion_loader()
 {
 	local cur=${COMP_WORDS[COMP_CWORD]}
-	local FOREMAN_HOSTS=$(gethosts --url=https://<forman host>/hosts --user=<user> --password=<password> $cur 2> /dev/null)
+	local FOREMAN_HOSTS=$(gethosts --url=https://<host>/api/v1/hosts?per_page=5000  --user=<user> --password=<password> $cur 2> /dev/null)
     COMPREPLY=( $(compgen -W "$FOREMAN_HOSTS") )
 }
 complete -F _foreman_completion_loader ssh
