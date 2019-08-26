@@ -51,11 +51,11 @@ type HostGetter struct {
 	CacheDuration    *time.Duration
 }
 
-type HostData struct {
+type Result struct {
 	Name string
 }
-type Host struct {
-	Host HostData
+type Response struct {
+	Results []Result
 }
 
 func (self *HostGetter) downloadHosts() ([]byte, error) {
@@ -126,7 +126,7 @@ func (self *HostGetter) getHosts() (rt string, err error) {
 
 func (self *HostGetter) downloadParseHosts() (rt string, err error) {
 	var data []byte
-	var hosts []Host
+	var hosts Response
 
 	data, err = self.downloadHosts()
 	if err != nil {
@@ -139,14 +139,14 @@ func (self *HostGetter) downloadParseHosts() (rt string, err error) {
 		return
 	}
 	var buffer bytes.Buffer
-	for _, host := range hosts {
-		buffer.WriteString(host.Host.Name + "\n")
+	for _, host := range hosts.Results {
+		buffer.WriteString(host.Name + "\n")
 	}
 	rt = buffer.String()
 	return
 }
 
-func (self *HostGetter) parse(data []byte) (hosts []Host, err error) {
+func (self *HostGetter) parse(data []byte) (hosts Response, err error) {
 	err = json.Unmarshal(data, &hosts)
 	if err != nil {
 		log.Print("error:", err)
